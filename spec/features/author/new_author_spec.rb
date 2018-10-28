@@ -22,4 +22,10 @@ describe "New author page", type: :feature do
     page.fill_in 'author[homepage]', with: 'https://en.wikipedia.org/wiki/Edsger_W._Dijkstra'
     find('input[type="submit"]').click
   end
+
+  it "should show errors on missing input" do
+    visit new_author_path
+    find('input[type="submit"]').click
+    expect(page).to have_text("errors prohibited this author from being saved")
+  end
 end
