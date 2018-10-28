@@ -4,4 +4,6 @@ class Paper < ApplicationRecord
   validates :year, presence: true, length: { in: 0..4 }, numericality: { only_integer: true }
 
   has_and_belongs_to_many :authors
+
+  scope :year, ->(year) {where("year IS ?", year)}
 end
