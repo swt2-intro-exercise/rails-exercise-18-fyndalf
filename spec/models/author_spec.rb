@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Author, type: :model do
-
   it "should be constructed and have all instance variables" do
     author = build(:author)
     expect(author.first_name).to eq('Alan')

@@ -1,25 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe "papers/index", type: :view do
-  before(:each) do
-    assign(:papers, [
-      Paper.create!(
-        :title => "Title",
-        :venue => "Venue",
-        :year => 2
-      ),
-      Paper.create!(
-        :title => "Title",
-        :venue => "Venue",
-        :year => 2
-      )
-    ])
+describe "papers/index", type: :feature do
+  it "should render without error" do
+    visit papers_path
   end
 
-  it "renders a list of papers" do
-    render
-    assert_select "tr>td", :text => "Title".to_s, :count => 2
-    assert_select "tr>td", :text => "Venue".to_s, :count => 2
-    assert_select "tr>td", :text => 2.to_s, :count => 2
+  it "should filter papers by year" do
+    @papers = FactoryBot.create(:paper)
+    visit papers_path.concat("?year=#{@papers.year}")
+    expect(page).to have_text(@papers.title)
+    visit papers_path.concat("?year=#{@papers.year + 123}")
+    expect(page).not_to have_text(@papers.title)
   end
 end
